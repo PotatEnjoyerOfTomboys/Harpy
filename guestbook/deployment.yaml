@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harpy
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: harpy
+  template:
+    metadata:
+      labels:
+        app: harpy
+    spec:
+      containers:
+      - image: harpy:latest
+        name: harpy
