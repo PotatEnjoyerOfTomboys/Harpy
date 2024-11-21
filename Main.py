@@ -1,5 +1,6 @@
 import json
 import sys
+import time
 
 class Harpy:
     def __init__(self, func_list):
@@ -28,6 +29,8 @@ def get_user_number(text="Enter number: ", num_type=int):
             return num
         except ValueError:
             print("Error: Wrong type")
+        except EOFError:
+            return num_type(1)
     #
 
 
@@ -48,6 +51,11 @@ def get_from_json(filename, requested_info):
 
 
 # |Scripts|-------------------------------------------------------------------------------------------------------------
+def fail_safe_for_dev():
+    print("BULLSHIT")
+    time.sleep(30)
+
+
 # |Default script|------------------------------------------------------------------------------------------------------
 def leave():
     input("Press enter to quit: ")
@@ -56,7 +64,8 @@ def leave():
 
 if __name__ == "__main__":
     Harpy(
-        [leave]
+        [fail_safe_for_dev,
+         leave]
     ).act()
 
 
