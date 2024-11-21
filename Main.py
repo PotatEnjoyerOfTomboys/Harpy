@@ -30,7 +30,7 @@ def get_user_number(text="Enter number: ", num_type=int):
         except ValueError:
             print("Error: Wrong type")
         except EOFError:
-            return num_type(1)
+            return num_type(0)
     #
 
 
@@ -53,7 +53,7 @@ def get_from_json(filename, requested_info):
 # |Scripts|-------------------------------------------------------------------------------------------------------------
 def fail_safe_for_dev():
     print("BULLSHIT")
-    time.sleep(30)
+    time.sleep(5)
 
 
 # |Default script|------------------------------------------------------------------------------------------------------
