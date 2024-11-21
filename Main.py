@@ -1,5 +1,5 @@
 import json
-
+import sys
 
 class Harpy:
     def __init__(self, func_list):
@@ -51,7 +51,7 @@ def get_from_json(filename, requested_info):
 # |Default script|------------------------------------------------------------------------------------------------------
 def leave():
     input("Press enter to quit: ")
-    quit()
+    sys.exit()
 
 
 if __name__ == "__main__":
