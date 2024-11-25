@@ -33,7 +33,7 @@ def get_user_number(text="Enter number: ", num_type=int):
         except ValueError:
             print("Error: Wrong type")
         except EOFError:
-            print(f"Error: No inputs, {datetime.datetime.now()}")
+            print(f"Error: No input given, {datetime.datetime.now()}")
             time.sleep(5)
     #
 
