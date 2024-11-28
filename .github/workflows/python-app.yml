@@ -67,7 +67,7 @@ jobs:
           id: date
           run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H:%M:%S')"
           env:
-            TAG_NAME: ${{ steps,date.outputs.date }}
+            TAG_NAME: ${{ steps.date.outputs.date }}
         
         - name: Modify YAML using yq
           run: |
