@@ -79,6 +79,7 @@ jobs:
       run: |
             git config user.name "DictateurBienveillant"
             git config user.email "cedric.trottier@monboreal.ca"
+            git config user.password ${{ secrets.TOKEN_FORGIT }}
             git add guestbook/deployment.yaml
             git commit -m "Update YAML file using sed"
             echo "line 87"
