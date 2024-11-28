@@ -56,7 +56,15 @@ jobs:
           uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
           with:
             images: tf7a/harpy
-
+            
+        - name: Commit and push changes
+          run: |
+            git config user.name "DictateurBienveillant"
+            git config user.email "cedric.trottier@monboreal.ca"
+            gh repo clone PotatEnjoyerOfTomboys/Harpy
+          env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}
+            
         - name: Install yq
           run: |
             curl -LO https://github.com/mikefarah/yq/releases/download/v4.13.0/yq_linux_amd64
@@ -68,18 +76,11 @@ jobs:
           run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H:%M:%S')"
           env:
             TAG_NAME: ${{ steps.date.outputs.date }}
-
-        - name: Commit and push changes
-          run: |
-            git config user.name "DictateurBienveillant"
-            git config user.email "cedric.trottier@monboreal.ca"
-            gh repo clone PotatEnjoyerOfTomboys/Harpy
-          env:
-            GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}
-            
+        
         - name: Modify YAML using yq
           run: |
-            yq eval 'spec.template.spec.containers.image = "${{ env.TAG_NAME }}" -i guestbook/deployment.yaml'
+            ls
+            yq eval 'spec.template.spec.containers.image = "${{ env.TAG_NAME }}" -i ./guestbook/deployment.yaml'
   
         - name: Commit and push changes
           run: |
