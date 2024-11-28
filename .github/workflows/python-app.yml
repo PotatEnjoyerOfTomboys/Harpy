@@ -58,6 +58,7 @@ jobs:
         git config user.email "cedric.trottier@monboreal.ca"
         git config user.password ${{ secrets.TOKEN_FORGIT }}
         gh repo clone PotatEnjoyerOfTomboys/Harpy
+        git pull
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}            
 
