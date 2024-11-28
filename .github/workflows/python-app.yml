@@ -85,8 +85,7 @@ jobs:
             git add guestbook/deployment.yaml
             git commit -m "Update YAML file using sed"
             echo "line 87"
-            git push 
-            # -u origin main
+            git push -u origin main
             echo "line 90"
           env:
             GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}
