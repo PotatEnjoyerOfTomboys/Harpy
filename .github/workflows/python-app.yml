@@ -71,7 +71,7 @@ jobs:
         
         - name: Modify YAML using yq
           run: |
-            yq eval 'spec.template.spec.containers.image = "${{ env.TAG_NAME }}"' -i guestbook/deployment.yaml
+            yq eval 'spec.template.spec.containers.image = "${{ env.TAG_NAME }}" -i guestbook/deployment.yaml'
   
         - name: Commit and push changes
           run: |
