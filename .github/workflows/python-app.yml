@@ -1,8 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
 name: Python application
-
 on:
   push:
     branches: [ "main" ]
@@ -13,10 +9,15 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  get_date:
     runs-on: ubuntu-latest
-    # runs-on: tf7a/harpy:latest
+    steps:
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+  build:
+    runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
@@ -61,6 +62,26 @@ jobs:
           uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
           with:
             images: tf7a/harpy
+
+        - name: Install yq
+          run: |
+            curl -LO https://github.com/mikefarah/yq/releases/download/v4.13.0/yq_linux_amd64
+            chmod +x yq_linux_amd64
+            mv yq_linux_amd64 /usr/local/bin/yq
+
+        - name: Modify YAML using yq
+          run: |
+            yq eval 'spec.template.spec.containers.image = "${{ $GITHUB_ENV }}"' -i guestbook/deployment.yaml
+  
+        - name: Commit and push changes
+          run: |
+            git config user.name "DictateurBienveillant"
+            git config user.email "cedric.trottier@monboreal.ca"
+            git add guestbook/deployment.yaml
+            git commit -m "Update YAML file using yq"
+            git push
+          env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}
   
         - name: Build and push Docker image
           id: push
