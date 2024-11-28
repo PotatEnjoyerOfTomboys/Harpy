@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> ${{ GITHUB_ENV }}
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> ${{ env.TAG_DATE }}
 
   build:
     runs-on: ubuntu-latest
@@ -71,7 +71,7 @@ jobs:
 
         - name: Modify YAML using yq
           run: |
-            yq eval 'spec.template.spec.containers.image = "${{ $GITHUB_ENV }}"' -i guestbook/deployment.yaml
+            yq eval 'spec.template.spec.containers.image = "${{ env.TAG_DATE }}"' -i guestbook/deployment.yaml
   
         - name: Commit and push changes
           run: |
@@ -91,6 +91,7 @@ jobs:
             file: ./Dockerfile
             push: true
             tags: ${{ steps.meta.outputs.tags }}
+            # tags: ${{ steps.meta.outputs.tags }}${{ env.TAG_DATE }}
             labels: ${{ steps.meta.outputs.labels }}
   
         # - name: Generate artifact attestation
