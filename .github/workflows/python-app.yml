@@ -82,22 +82,29 @@ jobs:
             git config user.password ${{ secrets.TOKEN_FORGIT }}
             git add guestbook/deployment.yaml
             git commit -m "Update YAML file using sed"
-            echo "line 87"
             git push -u origin main
-            echo "line 90"
       env:
             GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}
-  
-    - name: Build and push Docker image
-      id: push
-      uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-      with:
-            context: .
-            file: ./Dockerfile
-            push: true
-            # tags: ${{ steps.meta.outputs.tags }}
-            tags: ${{ env.TAG_NAME }}
-            labels: ${{ steps.meta.outputs.labels }}
+
+    # Probably won't fix it
+    - name: Tag image Build and push Docker image
+      run: |
+          docker build -t harpy .
+          docker tag harpy:latest tf7a/harpy:latest
+          
+          docker tag harpy:latest tf7a/harpy:${{ env.TAG_NAME }}
+          docker push tf7a/harpy:${{ env.TAG_NAME }}
+          
+    # - name: Build and push Docker image
+    #   id: push
+    #   uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+    #   with:
+    #         context: .
+    #         file: ./Dockerfile
+    #         push: true
+    #         # tags: ${{ steps.meta.outputs.tags }}
+    #         tags: ${{ env.TAG_NAME }}
+    #         labels: ${{ steps.meta.outputs.labels }}
   
         # - name: Generate artifact attestation
         #   uses: actions/attest-build-provenance@v1
