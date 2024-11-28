@@ -93,7 +93,7 @@ jobs:
           docker build -t harpy .
           
           echo "Tagging"
-          docker tag harpy:latest tf7a/harpy:${{ env.TAG_NAME }}
+          docker tag harpy tf7a/harpy:${{ env.TAG_NAME }}
           
           echo "Pushing off a cliff"
           docker push tf7a/harpy:${{ env.TAG_NAME }}
