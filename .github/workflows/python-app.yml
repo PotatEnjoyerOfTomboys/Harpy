@@ -91,7 +91,7 @@ jobs:
       run: |
           echo "Building"
           docker build -t harpy .
-          
+
           echo "Tagging"
           docker tag harpy tf7a/harpy:${{ env.TAG_NAME }}
           
