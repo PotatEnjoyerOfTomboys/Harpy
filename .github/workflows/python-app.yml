@@ -9,12 +9,6 @@ permissions:
   contents: read
 
 jobs:
-  get_date:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> ${{ env.TAG_DATE }}
-
   build:
     runs-on: ubuntu-latest
 
@@ -69,9 +63,16 @@ jobs:
             chmod +x yq_linux_amd64
             mv yq_linux_amd64 /usr/local/bin/yq
 
+        - name: Get date
+          id: date
+          run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H:%M:%S')"
+        - name: Test evn var
+          env:
+            TAG_NAME: ${{ steps,date.outputs.date }}
+        
         - name: Modify YAML using yq
           run: |
-            yq eval 'spec.template.spec.containers.image = "${{ env.TAG_DATE }}"' -i guestbook/deployment.yaml
+            yq eval 'spec.template.spec.containers.image = "${{ env.TAG_NAME }}"' -i guestbook/deployment.yaml
   
         - name: Commit and push changes
           run: |
@@ -91,7 +92,7 @@ jobs:
             file: ./Dockerfile
             push: true
             # tags: ${{ steps.meta.outputs.tags }}
-            tags: ${{ env.TAG_DATE }}
+            tags: ${{ env.TAG_NAME }}
             labels: ${{ steps.meta.outputs.labels }}
   
         # - name: Generate artifact attestation
