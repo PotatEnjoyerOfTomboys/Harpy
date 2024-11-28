@@ -81,7 +81,7 @@ jobs:
           run: |
             cd guestbook
             ls
-            yq -i '.spec.template.spec.containers.image = "${{ env.TAG_NAME }}" deployment.yaml'
+            yq .spec.template.spec.containers.image = "${{ env.TAG_NAME }}" deployment.yaml
   
         - name: Commit and push changes
           run: |
