@@ -14,5 +14,5 @@ spec:
         app: harpy
     spec:
       containers:
-      - image: tf7a/harpy:latest
+      - image: tf7a/harpy:20241128230924latest
         name: harpy
