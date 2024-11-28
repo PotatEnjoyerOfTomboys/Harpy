@@ -87,7 +87,7 @@ jobs:
             echo "line 87"
             git commit -m "Update YAML file using sed"
             echo "line 89"
-            git push
+            git push -u origin main
             echo "line 91"
           env:
             GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}
