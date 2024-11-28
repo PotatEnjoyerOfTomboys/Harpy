@@ -75,8 +75,8 @@ jobs:
           run: |
             cd guestbook
             ls
-            yq eval '.spec.template.spec.containers.image = "tf7a/harpy:${{ env.TAG_NAME }}"' deployment.yaml && cat deployment.yaml
-            sed -i 's|image: tf7a/harpy:*|image: tf7a/harpy:${{ env.IMAGE_TAG }}|' /deployment.yaml
+            #yq eval '.spec.template.spec.containers.image = "tf7a/harpy:${{ env.TAG_NAME }}"' deployment.yaml && cat deployment.yaml
+            sed -i 's|image: tf7a/harpy:*|image: tf7a/harpy:${{ env.IMAGE_TAG }}|' deployment.yaml
   
         - name: Commit and push changes
           run: |
