@@ -89,10 +89,13 @@ jobs:
     # Probably won't fix it
     - name: Tag image Build and push Docker image
       run: |
+          echo "Building"
           docker build -t harpy .
-          docker tag harpy:latest tf7a/harpy:latest
           
+          echo "Tagging"
           docker tag harpy:latest tf7a/harpy:${{ env.TAG_NAME }}
+          
+          echo "Pushing off a cliff"
           docker push tf7a/harpy:${{ env.TAG_NAME }}
           
     # - name: Build and push Docker image
