@@ -82,9 +82,13 @@ jobs:
           run: |
             git config user.name "DictateurBienveillant"
             git config user.email "cedric.trottier@monboreal.ca"
+            echo "line 85"
             git add guestbook/deployment.yaml
-            git commit -m "Update YAML file using yq"
+            echo "line 87"
+            git commit -m "Update YAML file using sed"
+            echo "line 89"
             git push
+            echo "line 91"
           env:
             GITHUB_TOKEN: ${{ secrets.TOKEN_FORGIT }}
   
