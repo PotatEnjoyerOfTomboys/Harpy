@@ -73,7 +73,7 @@ jobs:
       run: |
             cd guestbook
             ls
-            sed -i 's|image: tf7a/harpy:*|image: tf7a/harpy:${{ env.IMAGE_TAG }}|' deployment.yaml
+            sed -i 's|image: tf7a/harpy:*|image: tf7a/harpy:$IMAGE_TAG|' deployment.yaml
   
     - name: Commit and push changes
       run: |
