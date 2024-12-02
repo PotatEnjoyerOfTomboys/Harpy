@@ -67,7 +67,7 @@ jobs:
       run: |
         IMAGE_TAG=$(date +'%Y%m%d%H%M%S')  # You can use any method to generate the tag, e.g., version from a tag
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-        echo ${{ env.IMAGE_TAG }}
+        echo $IMAGE_TAG
         
     - name: Modify YAML using yq
       run: |
