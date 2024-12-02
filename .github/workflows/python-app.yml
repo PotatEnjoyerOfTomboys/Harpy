@@ -66,8 +66,8 @@ jobs:
       id: set_tag
       run: |
         IMAGE_TAG=$(date +'%Y%m%d%H%M%S')  # You can use any method to generate the tag, e.g., version from a tag
-        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         echo $IMAGE_TAG
+        # echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         
     - name: Modify YAML using yq
       run: |
@@ -97,22 +97,24 @@ jobs:
 
         # Build the Docker image
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag harpy:${{ env.TAG_NAME }}
+      run: docker build . --file Dockerfile --tag harpy:$IMAGE_TAG
 
     # Tag the Docker Images
     - name: Tag the image for the private registry $DOCKER_REGISTRY_URL
-      run: docker tag harpy:${{ env.TAG_NAME }} tf7a/harpy:${{ env.TAG_NAME }}
+      run: docker tag harpy:$IMAGE_TAG tf7a/harpy:$IMAGE_TAG
 
     # Push the images to the registry
     - name: Push the Docker image with version number
-      run: docker push tf7a/harpy:${{ env.TAG_NAME }}
+      run: docker push tf7a/harpy:$IMAGE_TAG
 
     # Remove the local images
     - name: Remove the Docker image with version number
-      run: docker rmi tf7a/harpy:${{ env.TAG_NAME }}
+      run: docker rmi tf7a/harpy:$IMAGE_TAG
 
     - name: Remove the local image
-      run: docker rmi harpy:${{ env.TAG_NAME }}
+      run: docker rmi harpy:$IMAGE_TAG
+
+    
     #- name: Build and push Docker image
     #  id: push
     #  uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
