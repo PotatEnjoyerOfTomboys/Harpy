@@ -97,7 +97,9 @@ jobs:
 
         # Build the Docker image
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag harpy:$IMAGE_TAG
+      run: |
+        echo $IMAGE_TAG
+        docker build . --file Dockerfile --tag harpy:$IMAGE_TAG
 
     # Tag the Docker Images
     - name: Tag the image for the private registry $DOCKER_REGISTRY_URL
