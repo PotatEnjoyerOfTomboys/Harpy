@@ -14,5 +14,5 @@ spec:
         app: harpy
     spec:
       containers:
-      - image: tf7a/harpy:86c4ddd
+      - image: tf7a/harpy:c18c4b1
         name: harpy
